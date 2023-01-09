@@ -275,6 +275,7 @@ class Pytrader_API:
             Account maximum number of pending orders,
             Account margin call percentage,
             Account close open trades margin percentage
+            Account company
         """
         self.command_return_error = ''
 
@@ -305,6 +306,7 @@ class Pytrader_API:
         returnDict['limit_orders'] = int(x[6])
         returnDict['margin_call'] = float(x[7])
         returnDict['margin_close'] = float(x[8])
+        returnDict['company'] = str(x[9])
 
         self.command_OK = True
         return returnDict
