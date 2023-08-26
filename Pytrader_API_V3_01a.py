@@ -272,52 +272,54 @@ class Pytrader_API:
         """
         return self.connected
 
-    def Get_static_account_info(self) -> dict:
-        """
-        Retrieves static account information.
-
-        Returns: Dictionary with:
-            Account name,
-            Account number,
-            Account currency,
-            Account type,
-            Account leverage,
-            Account trading allowed,
-            Account maximum number of pending orders,
-            Account margin call percentage,
-            Account close open trades margin percentage
-            Account company
-        """
-        self.command_return_error = ''
-
-        ok, dataString = self.send_command('F001^1^')
-        if (ok == False):
-            self.command_OK = False
-            return None
-
-        if self.debug:
-            print(dataString)
-
-        x = dataString.split('^')
-        if x[0] != 'F001':
-            self.command_return_error = ERROR_DICT['99900']
-            self.command_OK = False
-            return None
-
-        returnDict = {}
-        del x[0:2]
-        x.pop(-1)
-
-        returnDict['name'] = str(x[0])
-        returnDict['login'] = str(x[1])
-        returnDict['currency'] = str(x[2])
-        returnDict['type'] = str(x[3])
-        returnDict['leverage'] = int(x[4])
-        returnDict['trade_allowed'] = bool(x[5])
-        returnDict['limit_orders'] = int(x[6])
-        returnDict['margin_call'] = float(x[7])
-        returnDict['margin_close'] = float(x[8])
-        returnDict['company'] = str(x[9])
+    def Get_static_account_info(self) -> dict: 
+        """ 
+        Retrieves static account information. 
+ 
+        Returns: Dictionary with: 
+            Account name, 
+            Account number, 
+            Account currency, 
+            Account type, 
+            Account leverage, 
+            Account trading allowed, 
+            Account maximum number of pending orders, 
+            Account margin call percentage, 
+            Account close open trades margin percentage 
+            Account company 
+            Account server 
+        """ 
+        self.command_return_error = '' 
+ 
+        ok, dataString = self.send_command('F001^1^') 
+        if (ok == False): 
+            self.command_OK = False 
+            return None 
+ 
+        if self.debug: 
+            print(dataString) 
+ 
+        x = dataString.split('^') 
+        if x[0] != 'F001': 
+            self.command_return_error = ERROR_DICT['99900'] 
+            self.command_OK = False 
+            return None 
+ 
+        returnDict = {} 
+        del x[0:2] 
+        x.pop(-1) 
+ 
+        returnDict['name'] = str(x[0]) 
+        returnDict['login'] = str(x[1]) 
+        returnDict['currency'] = str(x[2]) 
+        returnDict['type'] = str(x[3]) 
+        returnDict['leverage'] = int(x[4]) 
+        returnDict['trade_allowed'] = bool(x[5]) 
+        returnDict['limit_orders'] = int(x[6]) 
+        returnDict['margin_call'] = float(x[7]) 
+        returnDict['margin_close'] = float(x[8]) 
+        returnDict['company'] = str(x[9]) 
+        returnDict['server'] = str(x[10]) 
 
         self.command_OK = True
         return returnDict
